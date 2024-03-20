@@ -88,3 +88,24 @@ export const actualizarUsuario = async (req: Request, res: Response): Promise<vo
     res.status(500).json({ error: error.message });
   }
 };
+
+// Controlador para eliminar un usuario
+export const eliminarUsuario = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params; // Obtener el ID del usuario a eliminar
+
+    // Verificar si el usuario existe
+    const usuarioExistente: IUser | null = await UsuarioModel.findById(id);
+    if (!usuarioExistente) {
+        res.status(404).json({ message: 'Usuario no encontrado' });
+        return;
+      }
+    // Eliminar el usuario de la base de datos
+    await UsuarioModel.findByIdAndDelete(id);
+
+    res.json({ message: 'Usuario eliminado correctamente' });
+  } catch (error: any) {
+    // Manejar errores
+    res.status(500).json({ error: error.message });
+  }
+};
