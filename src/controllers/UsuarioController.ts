@@ -44,3 +44,47 @@ export const crearUsuario = async (req: Request, res: Response): Promise<void> =
   }
   
 };
+
+// Controlador para obtener todos los usuarios
+export const visualizarUsuarios = async (req: Request, res: Response): Promise<void> => {
+  try {
+    // Obtener todos los usuarios de la base de datos
+    const usuarios: IUser[] = await UsuarioModel.find();
+
+    // Enviar la lista de usuarios como respuesta
+    res.json(usuarios);
+  } catch (error: any) {
+    // Manejar errores
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Controlador para actualizar un usuario
+export const actualizarUsuario = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params; // Obtener el ID del usuario a actualizar
+    const { roles_idroles, nombre, correo, contrasena, telefono } = req.body;
+
+    // Verificar si el usuario existe
+    const usuarioExistente: IUser | null = await UsuarioModel.findById(id);
+    if (!usuarioExistente) {
+      res.status(404).json({ message: 'Usuario no encontrado' });
+      return;
+    }
+
+    // Actualizar los datos del usuario
+    usuarioExistente.roles_idroles = roles_idroles;
+    usuarioExistente.nombre = nombre;
+    usuarioExistente.correo = correo;
+    usuarioExistente.contrasena = contrasena;
+    usuarioExistente.telefono = telefono;
+
+    // Guardar los cambios en la base de datos
+    await usuarioExistente.save();
+
+    res.json({ message: 'Usuario actualizado correctamente' });
+  } catch (error: any) {
+    // Manejar errores
+    res.status(500).json({ error: error.message });
+  }
+};
