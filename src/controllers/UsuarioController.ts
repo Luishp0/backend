@@ -18,7 +18,7 @@ function encryptPassword(password: string, key: string): string {
 
 export const crearUsuario = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { roles_idroles, nombre, correo, contrasena, telefono } = req.body;
+    const { roles_idroles, nombre, fechaNacimiento, correo, contrasena, telefono } = req.body;
 
     // Generar el hash de la contraseña
    // const hashedPassword: string = await bcrypt.hash(contrasena, 10);
@@ -30,6 +30,7 @@ export const crearUsuario = async (req: Request, res: Response): Promise<void> =
     const nuevoUsuario: IUser = new UsuarioModel({
       roles_idroles,
       nombre,
+      fechaNacimiento,
       correo,
       contrasena: encryptedPassword,
       telefono,
