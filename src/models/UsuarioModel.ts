@@ -3,7 +3,7 @@
 import mongoose, { Date, Document } from 'mongoose';
 
 export interface IUser extends Document {
-  roles_idroles: string;
+  roles_idroles: Number;
   nombre: string;
   correo: string;
   fechaNacimiento: Date;

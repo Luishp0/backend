@@ -39,7 +39,7 @@ export const crearUsuario = async (req: Request, res: Response): Promise<void> =
     // Guardar el nuevo usuario en la base de datos
     await nuevoUsuario.save();
 
-    res.json({ message: 'Registro creado correctamente' });
+    res.json({ message: 'Registro creado correctamente', nuevoUsuario });
   }  catch (error: any) {
     res.status(500).json({ error: error.message });
   }
@@ -105,6 +105,28 @@ export const eliminarUsuario = async (req: Request, res: Response): Promise<void
     await UsuarioModel.findByIdAndDelete(id);
 
     res.json({ message: 'Usuario eliminado correctamente' });
+  } catch (error: any) {
+    // Manejar errores
+    res.status(500).json({ error: error.message });
+  }
+};
+//controlador para visualizar usuario por nombre
+export const visualizarUsuarioPorNombre = async (req: Request, res: Response): Promise<void> => {
+  try {
+    // Obtener el nombre del usuario desde los parámetros de la solicitud
+    const nombreUsuario = req.params.nombre;
+
+    // Buscar el usuario por su nombre en la base de datos
+    const usuario: IUser [] = await UsuarioModel.find({ nombre: nombreUsuario });
+
+    // Verificar si se encontró el usuario
+    if (!usuario) {
+       res.status(404).json({ mensaje: 'Usuario no encontrado' });
+       return;
+      }
+
+    // Enviar el usuario encontrado como respuesta
+    res.json(usuario);
   } catch (error: any) {
     // Manejar errores
     res.status(500).json({ error: error.message });
