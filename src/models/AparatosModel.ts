@@ -2,15 +2,15 @@ import mongoose, { Document } from "mongoose";
 
 export interface IUser extends Document{
     nombre: String;
-    minimo: String; 
-    maximo: String;
+    minimo: Number; 
+    maximo: Number;
     estado: Boolean;
 }
 
 const aparatosSchema = new mongoose.Schema({
-    nombre: {type: Number, required: true },
-    minimo: {type: String, requied: true },
-    maximo: {type: String, required: true},
+    nombre: {type: String, required: true },
+    minimo: {type: Number, requied: true },
+    maximo: {type: Number, required: true},
     estado: {type: Boolean, required: true}
 });
 

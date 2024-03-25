@@ -14,14 +14,14 @@ const router = Router();
 
 router.post('/', crearAparato);
 router.get('/', visualizarAparatos);
-router.get('/:id', visualizarAparatoPorId);
+router.get('/ver/:id', visualizarAparatoPorId);
 router.put('/:id', actualizarAparato);
 router.delete('/:id', eliminarAparato);
 router.get('/buscar', buscarAparatos);
 router.get('/estadisticas', obtenerEstadisticasAparatos);
-router.get('/datos-grafica', obtenerDatosGraficaAparatos);
-
-router.get('/nombre/:nombre', visualizarAparatosPorNombre);
+router.get('/activo-inactivo', obtenerDatosGraficaAparatos);
 router.get('/rango', visualizarAparatosPorRango);
+router.get('/:nombre', visualizarAparatosPorNombre);
+
 
 export default router;
