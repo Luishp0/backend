@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 //import bcrypt from 'bcrypt';
 import UsuarioModel, { IUser } from '../models/UsuarioModel';  // Importa el modelo de usuario
 import bcrypt from 'bcrypt';
-const key = 'clave';
+import jwt from 'jsonwebtoken';
 
 
 export const crearUsuario = async (req: Request, res: Response): Promise<void> => {
@@ -131,5 +131,35 @@ export const visualizarUsuarioPorNombre = async (req: Request, res: Response): P
   } catch (error: any) {
     // Manejar errores
     res.status(500).json({ error: error.message });
+  }
+};
+
+
+export const loginUser = async (req: Request, res: Response): Promise<void> => {
+  const { correo, contrasena } = req.body;
+
+  try {
+    // Verifica si el usuario existe
+    const usuario = await UsuarioModel.findOne({ correo });
+
+    if (!usuario) {
+       res.status(400).json({ message: 'Correo electrónico o contraseña incorrectos' });
+       return ;
+    }
+
+    // Verifica si la contraseña es correcta
+    const isPasswordCorrect = await bcrypt.compare(contrasena, usuario.contrasena);
+
+    if (!isPasswordCorrect) {
+      res.status(400).json({ message: 'Correo electrónico o contraseña incorrectos' });
+      return;
+    }
+
+    // Genera el token de autenticación
+    const token = jwt.sign({ correo: usuario.correo, id: usuario._id }, 'claveSecreta', { expiresIn: '1h' });
+
+    res.status(200).json({ result: usuario, token });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al iniciar sesión' });
   }
 };

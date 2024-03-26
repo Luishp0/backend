@@ -1,7 +1,4 @@
-// models/UsuarioModel.ts
-
 import mongoose, { Date, Document } from 'mongoose';
-
 export interface IUser extends Document {
   roles_idroles: Number;
   nombre: string;
