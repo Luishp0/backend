@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';  
 import connectDB from "./config/database"
 import usuarioRoutes from './routes/UsuarioRoutes';
 import pecesRoutes from './routes/PecesRoutes';
@@ -7,7 +8,7 @@ import aparatos from './routes/AparatosRoutes'
 
 const app = express();
 const port = 8000;
-
+app.use(cors());
 app.use(express.json());
 app.use('/usuario', usuarioRoutes);
 app.use('/peces', pecesRoutes);

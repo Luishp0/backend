@@ -17,7 +17,7 @@ const usuarioSchema = new mongoose.Schema({
   correo: { type: String, required: true, unique: true},
   fechaNacimiento: {type: Date, required: true},
   contrasena: { type: String, required: true },
-  telefono: { type: Number, required: true },
+  telefono: { type: String, required: true },
 });
 
 const UserModel = mongoose.model<IUser>('usuarios', usuarioSchema);

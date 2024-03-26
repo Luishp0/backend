@@ -2,29 +2,30 @@
 import { Request, Response } from 'express';
 //import bcrypt from 'bcrypt';
 import UsuarioModel, { IUser } from '../models/UsuarioModel';  // Importa el modelo de usuario
+import bcrypt from 'bcrypt';
 const key = 'clave';
-
-function encryptPassword(password: string, key: string): string {
-  let encryptedPassword = '';
-  for (let i = 0; i < password.length; i++) {
-      const passwordCharCode = password.charCodeAt(i);
-      const keyCharCode = key.charCodeAt(i % key.length);
-      const encryptedCharCode = (passwordCharCode + keyCharCode) % 256; // Utiliza 256 para asegurar que el resultado esté dentro del rango ASCII
-      encryptedPassword += String.fromCharCode(encryptedCharCode);
-  }
-  return encryptedPassword;
-}
 
 
 export const crearUsuario = async (req: Request, res: Response): Promise<void> => {
   try {
     const { roles_idroles, nombre, fechaNacimiento, correo, contrasena, telefono } = req.body;
 
-    // Generar el hash de la contraseña
-   // const hashedPassword: string = await bcrypt.hash(contrasena, 10);
+    // Verificar si el usuario ya existe
+    const usuarioExistente = await UsuarioModel.findOne({ correo });
 
-    // Encriptar la contraseña con cifrado de Vigenère
-    const encryptedPassword = encryptPassword(contrasena, key);
+    if (usuarioExistente) {
+       res.status(400).json({ errors: { correo: 'El correo electrónico ya está registrado' } });
+       return;
+    }
+
+    // Comprobar si la contraseña está definida
+    if (!contrasena) {
+       res.status(400).json({ errors: { contrasena: 'La contraseña es requerida' } });
+       return;
+    }
+
+    // Generar el hash de la contraseña con bcrypt
+    const hashedPassword: string = await bcrypt.hash(contrasena, 10);
 
     // Crear el nuevo usuario con la contraseña encriptada
     const nuevoUsuario: IUser = new UsuarioModel({
@@ -32,7 +33,7 @@ export const crearUsuario = async (req: Request, res: Response): Promise<void> =
       nombre,
       fechaNacimiento,
       correo,
-      contrasena: encryptedPassword,
+      contrasena: hashedPassword,
       telefono,
     });
 
@@ -40,10 +41,10 @@ export const crearUsuario = async (req: Request, res: Response): Promise<void> =
     await nuevoUsuario.save();
 
     res.json({ message: 'Registro creado correctamente', nuevoUsuario });
-  }  catch (error: any) {
-    res.status(500).json({ error: error.message });
+  } catch (error: any) {
+    console.error('Error al registrar el usuario:', error.message);
+    res.status(500).json({ error: 'Error interno del servidor al registrar el usuario' });
   }
-  
 };
 
 // Controlador para obtener todos los usuarios
