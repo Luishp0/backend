@@ -35,6 +35,6 @@ const pezSchema = new mongoose.Schema({
 });
 
 // Crear el modelo de Mongoose para la colección de peces
-const PezModel = mongoose.model<IPez>('Pez', pezSchema, 'peces');
+const PezModel = mongoose.model<IPez>('Peces', pezSchema, 'peces');
 
 export default PezModel;

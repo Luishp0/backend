@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 
 const connectDB = async (): Promise<void> => {
   try {
-    await mongoose.connect('mongodb+srv://luishernandez21s:33116011Luis*@cluster0.0nmr178.mongodb.net/pecera?retryWrites=true&w=majority', {
-     //mongodb://localhost:27017
+    await mongoose.connect('mongodb://localhost:27017/Pecera', {
+     //mongodb://localhost:27017?Pecera
      //'mongodb+srv://luishernandez21s:33116011Luis*@cluster0.0nmr178.mongodb.net/pecera?retryWrites=true&w=majority'
     });
 
