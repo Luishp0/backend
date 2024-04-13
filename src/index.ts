@@ -9,6 +9,12 @@ import respaldo from './routes/RespaldoRoutes'
 
 const app = express();
 const port = 8000;
+
+app.use((req, res, next) => {
+  res.setHeader('Content-Type', 'application/json');
+  next();
+});
+
 app.use(cors());
 app.use(express.json());
 app.use('/usuario', usuarioRoutes);

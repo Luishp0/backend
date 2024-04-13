@@ -1,10 +1,11 @@
 import express from "express";
-import { crearRespaldo } from "../controllers/RespaldoController";
+import { crearRespaldo, obtenerHistorial } from "../controllers/RespaldoController";
 
 
 const router = express.Router();
 
 
 router.get('/', crearRespaldo)
+router.get('/historial', obtenerHistorial)
 
 export default router
