@@ -20,8 +20,6 @@ const usuarioSchema = new mongoose.Schema({
   fechaNacimiento: { type: Date, required: true },
   contrasena: { type: String, required: true },
   telefono: { type: String, required: true },
-  resetPasswordToken: String,
-  resetPasswordExpires: Date,
   codigoVerificacion: String,
   codigoVerificacionExpires: Date,
 });
