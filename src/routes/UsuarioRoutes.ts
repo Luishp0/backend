@@ -1,6 +1,6 @@
 import express from 'express';
 import { actualizarUsuario, crearUsuario, eliminarUsuario, loginUser, visualizarUsuarioPorNombre, visualizarUsuarios } from '../controllers/UsuarioController';
-import { enviarCorreoRecuperacion } from '../controllers/RestablecerCorreoController';
+import { enviarCorreoRecuperacion, reenviarCodigoVerificacion, resetPassword, verificarCodigo } from '../controllers/RestablecerContrasenaController';
 
 const router = express.Router();
 
@@ -11,7 +11,10 @@ router.put('/:id', actualizarUsuario);
 router.delete('/:id', eliminarUsuario);
 router.post('/login', loginUser)
 
-router.post('/correo', enviarCorreoRecuperacion)
+router.post('/enviarcorreo', enviarCorreoRecuperacion);
+router.post('/verificarcodigo', verificarCodigo);
+router.post('/reenviarcodigo', reenviarCodigoVerificacion)
+router.post('/resetcontrasena', resetPassword);
 
 
 

@@ -1,7 +1,7 @@
-import mongoose, { Date, Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 export interface IUser extends Document {
-  roles_idroles: Number;
+  roles_idroles: number;
   nombre: string;
   correo: string;
   fechaNacimiento: Date;
@@ -9,6 +9,8 @@ export interface IUser extends Document {
   telefono: string;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
+  codigoVerificacion?: string;
+  codigoVerificacionExpires?: Date;
 }
 
 const usuarioSchema = new mongoose.Schema({
@@ -20,6 +22,8 @@ const usuarioSchema = new mongoose.Schema({
   telefono: { type: String, required: true },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
+  codigoVerificacion: String,
+  codigoVerificacionExpires: Date,
 });
 
 const UserModel = mongoose.model<IUser>('usuarios', usuarioSchema);
