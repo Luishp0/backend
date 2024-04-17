@@ -193,8 +193,6 @@ export const reenviarCodigoVerificacion = async (req: Request, res: Response): P
   
       // Actualizar la contraseña del usuario
       usuario.contrasena = hashedPassword;
-      usuario.resetPasswordToken = undefined;
-      usuario.resetPasswordExpires = undefined;
   
       await usuario.save();
   
