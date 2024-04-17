@@ -140,11 +140,11 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
   try {
     // Verifica si el usuario existe
-    const usuario = await UsuarioModel.findOne({ correo });
+    const usuario: IUser | null = await UsuarioModel.findOne({ correo });
 
     if (!usuario) {
        res.status(400).json({ message: 'Correo electrónico o contraseña incorrectos' });
-       return ;
+       return;
     }
 
     // Verifica si la contraseña es correcta
@@ -158,7 +158,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     // Genera el token de autenticación
     const token = jwt.sign({ correo: usuario.correo, id: usuario._id }, 'claveSecreta', { expiresIn: '1h' });
 
-    res.status(200).json({ result: usuario, token });
+    res.status(200).json({ result: {  token, roles_idroles: usuario.roles_idroles, nombre : usuario.nombre } });
   } catch (error) {
     res.status(500).json({ message: 'Error al iniciar sesión' });
   }

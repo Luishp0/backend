@@ -1,14 +1,14 @@
 import mongoose, { Document } from 'mongoose';
 
 export interface IUser extends Document {
+  _id: string;
   roles_idroles: number;
   nombre: string;
   correo: string;
   fechaNacimiento: Date;
   contrasena: string;
   telefono: string;
-  resetPasswordToken?: string;
-  resetPasswordExpires?: Date;
+  __v: number;
   codigoVerificacion?: string;
   codigoVerificacionExpires?: Date;
 }
