@@ -123,3 +123,16 @@ export const obtenerPecesDeUsuario = async (req: Request, res: Response): Promis
     }
   };
   
+  // Controlador para contar todos los peces
+export const contarPeces = async (req: Request, res: Response): Promise<void> => {
+  try {
+    // Contar todos los peces en la base de datos
+    const totalPeces: number = await PezModel.countDocuments();
+
+    // Enviar el número total de peces como respuesta
+    res.json({ totalPeces });
+  } catch (error: any) {
+    // Manejar errores
+    res.status(500).json({ error: error.message });
+  }
+};

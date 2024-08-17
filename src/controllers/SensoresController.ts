@@ -100,6 +100,18 @@ export const eliminarSensor = async (req: Request, res: Response): Promise<void>
   }
 };
 
+// Controlador para contar todos los sensores
+export const contarSensores = async (req: Request, res: Response): Promise<void> => {
+  try {
+    // Contar todos los sensores en la base de datos
+    const totalSensores: number = await SensorModel.countDocuments();
 
+    // Enviar el número total de sensores como respuesta
+    res.json({ totalSensores });
+  } catch (error: any) {
+    // Manejar errores
+    res.status(500).json({ error: error.message });
+  }
+};
 
 
