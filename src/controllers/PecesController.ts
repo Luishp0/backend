@@ -111,17 +111,23 @@ export const eliminarPez = async (req: Request, res: Response): Promise<void> =>
 
 // Controlador para obtener todos los peces asociados a un usuario
 export const obtenerPecesDeUsuario = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { idUsuario } = req.params;
-  
-      // Buscar todos los peces asociados al usuario en la base de datos
-      const peces: IPez[] = await PezModel.find({ idUsuario });
-  
-      res.json(peces);
-    } catch (error : any) {
-      res.status(500).json({ error: error.message });
+  try {
+    const { idUsuario } = req.params;
+
+    // Buscar todos los peces asociados al usuario en la base de datos
+    const peces = await PezModel.find({ id_usuario: idUsuario }).lean();
+
+    if (peces.length === 0) {
+      res.status(404).json({ mensaje: "No se encontraron peces para este usuario" });
+      return;
     }
-  };
+
+    res.json(peces);
+  } catch (error: any) {
+    console.error('Error al obtener peces:', error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+};
   
   // Controlador para contar todos los peces
 export const contarPeces = async (req: Request, res: Response): Promise<void> => {
