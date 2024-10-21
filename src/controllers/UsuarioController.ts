@@ -65,7 +65,7 @@ export const visualizarUsuarios = async (req: Request, res: Response): Promise<v
 export const actualizarUsuario = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params; // Obtener el ID del usuario a actualizar
-    const { roles_idroles, nombre, correo, contrasena, telefono } = req.body;
+    const { roles_idroles, nombre, correo, fechaNacimiento, telefono } = req.body;
 
     // Verificar si el usuario existe
     const usuarioExistente: IUser | null = await UsuarioModel.findById(id);
@@ -78,7 +78,7 @@ export const actualizarUsuario = async (req: Request, res: Response): Promise<vo
     usuarioExistente.roles_idroles = roles_idroles;
     usuarioExistente.nombre = nombre;
     usuarioExistente.correo = correo;
-    usuarioExistente.contrasena = contrasena;
+    usuarioExistente.fechaNacimiento = fechaNacimiento;
     usuarioExistente.telefono = telefono;
 
     // Guardar los cambios en la base de datos
@@ -161,6 +161,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     res.status(200).json({ 
       result: {  
         token, 
+        id: usuario._id,
         roles_idroles: usuario.roles_idroles, 
         nombre: usuario.nombre,
         telefono: usuario.telefono,
