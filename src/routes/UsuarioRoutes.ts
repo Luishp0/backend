@@ -10,9 +10,11 @@ router.get('/contador', contarUsuarios);
 router.get('/:nombre', visualizarUsuarioPorNombre);
 router.put('/:id', actualizarUsuario);
 router.delete('/:id', eliminarUsuario);
+router.post('/enviarcorreo', enviarCorreoRecuperacion);
+
 router.post('/login', loginUser)
 
-router.post('/enviarcorreo', enviarCorreoRecuperacion);
+
 router.post('/verificarcodigo', verificarCodigo);
 router.post('/reenviarcodigo', reenviarCodigoVerificacion)
 router.post('/resetcontrasena', resetPassword);
