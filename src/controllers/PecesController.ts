@@ -1,4 +1,3 @@
-// controllers/PezController.ts
 
 import { Request, Response } from 'express';
 import PezModel, { IPez } from '../models/PecesModel'; // Importar el modelo de peces
