@@ -9,6 +9,7 @@ import pecesRoutes from './routes/PecesRoutes';
 import sensoresRoutes from './routes/SensoresRoutes';
 import aparatos from './routes/AparatosRoutes'
 import respaldo from './routes/RespaldoRoutes'
+import imagen from './routes/ImagenRoute'
 
 const app = express();
 const port = 8000;
@@ -25,6 +26,7 @@ app.use('/peces', pecesRoutes);
 app.use('/sensores', sensoresRoutes);
 app.use('/aparatos', aparatos)
 app.use('/respaldo', respaldo)
+app.use('/imagen', imagen)
 
 
 connectDB()
