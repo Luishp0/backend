@@ -172,6 +172,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         telefono: usuario.telefono,
         correo: usuario.correo,
         fechaNacimiento: usuario.fechaNacimiento,
+        fotos: usuario.fotos
         
       } 
     });
