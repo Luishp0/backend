@@ -11,6 +11,9 @@ export interface IUser extends Document {
   __v: number;
   codigoVerificacion?: string;
   codigoVerificacionExpires?: Date;
+  fotos?: {
+    url: string;
+  };
 }
 
 const usuarioSchema = new mongoose.Schema({
@@ -22,6 +25,9 @@ const usuarioSchema = new mongoose.Schema({
   telefono: { type: String, required: true },
   codigoVerificacion: String,
   codigoVerificacionExpires: Date,
+  fotos: {
+    url: { type: String },
+  },
 });
 
 const UserModel = mongoose.model<IUser>('usuarios', usuarioSchema);

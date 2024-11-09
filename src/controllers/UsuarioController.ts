@@ -65,7 +65,7 @@ export const visualizarUsuarios = async (req: Request, res: Response): Promise<v
 export const actualizarUsuario = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params; // Obtener el ID del usuario a actualizar
-    const { roles_idroles, nombre, correo, fechaNacimiento, telefono } = req.body;
+    const { roles_idroles, nombre, correo, fechaNacimiento, telefono, fotos } = req.body; // Agregar fotos al destructuring
 
     // Verificar si el usuario existe
     const usuarioExistente: IUser | null = await UsuarioModel.findById(id);
@@ -80,6 +80,11 @@ export const actualizarUsuario = async (req: Request, res: Response): Promise<vo
     usuarioExistente.correo = correo;
     usuarioExistente.fechaNacimiento = fechaNacimiento;
     usuarioExistente.telefono = telefono;
+
+    // Actualizar el campo de fotos si está presente
+    if (fotos) {
+      usuarioExistente.fotos = fotos;
+    }
 
     // Guardar los cambios en la base de datos
     await usuarioExistente.save();

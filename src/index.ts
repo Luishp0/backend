@@ -29,6 +29,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Rutas
+app.use('/imagenes', express.static('imagenes'));
+
 app.use('/imagen', imagenRoutes);
 app.use('/usuario', usuarioRoutes);
 app.use('/peces', pecesRoutes);
