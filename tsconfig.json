@@ -3,7 +3,8 @@
       "outDir": "./dist",        // Carpeta de salida para archivos compilados
       "module": "commonjs",
       "target": "es6",
-      "strict": true
+      "strict": true,
+      "esModuleInterop": true
     },
     "include": ["src/**/*"]       // Incluye todos los archivos dentro de la carpeta src
   }
