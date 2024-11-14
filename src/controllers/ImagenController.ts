@@ -1,5 +1,5 @@
-// src/controllers/ImagenController.ts
 import { Request, Response } from 'express';
+import path from 'path';
 
 export const subirImagen = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -10,8 +10,9 @@ export const subirImagen = async (req: Request, res: Response): Promise<void> =>
 
         const imagePath = req.file.path; // Ruta relativa de la imagen
         const host = req.hostname === 'localhost' ? '192.168.1.5' : req.hostname; // Usar IP si es localhost
-        const port = process.env.PORT || 8000; // Asegúrate de tener el puerto correcto
-        const imageUrl = `${req.protocol}://${host}:${port}/${imagePath.replace(/\\/g, '/')}`; // URL absoluta
+        const isProduction = process.env.NODE_ENV === 'production';
+        const port = isProduction ? '' : `:${process.env.PORT || 8000}`;
+        const imageUrl = `${req.protocol}://${host}${port}/${imagePath.replace(/\\/g, '/')}`; // URL absoluta sin puerto en producción
 
         console.log('URL Absoluta de la imagen:', imageUrl); // Para depuración
 
