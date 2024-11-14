@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resetPassword = exports.reenviarCodigoVerificacion = exports.verificarCodigo = exports.enviarCorreoRecuperacion = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const UsuarioModel_1 = __importDefault(require("../models/UsuarioModel"));
 const enviarCorreoRecuperacion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -25,7 +25,7 @@ const enviarCorreoRecuperacion = (req, res) => __awaiter(void 0, void 0, void 0,
             return;
         }
         const codigoVerificacion = Math.floor(1000 + Math.random() * 9000).toString();
-        const hashCodigoVerificacion = yield bcrypt_1.default.hash(codigoVerificacion, 10);
+        const hashCodigoVerificacion = yield bcryptjs_1.default.hash(codigoVerificacion, 10);
         usuario.codigoVerificacion = hashCodigoVerificacion;
         usuario.codigoVerificacionExpires = new Date(Date.now() + 3600000);
         yield usuario.save();
@@ -78,7 +78,7 @@ const verificarCodigo = (req, res) => __awaiter(void 0, void 0, void 0, function
             res.status(400).json({ error: 'Código de verificación inválido o expirado.' });
             return;
         }
-        const isCodigoValido = yield bcrypt_1.default.compare(codigoVerificacion, usuario.codigoVerificacion);
+        const isCodigoValido = yield bcryptjs_1.default.compare(codigoVerificacion, usuario.codigoVerificacion);
         if (!isCodigoValido) {
             res.status(400).json({ error: 'Código de verificación inválido.' });
             return;
@@ -99,7 +99,7 @@ const reenviarCodigoVerificacion = (req, res) => __awaiter(void 0, void 0, void 
             return;
         }
         const codigoVerificacion = Math.floor(1000 + Math.random() * 9000).toString();
-        const hashCodigoVerificacion = yield bcrypt_1.default.hash(codigoVerificacion, 10);
+        const hashCodigoVerificacion = yield bcryptjs_1.default.hash(codigoVerificacion, 10);
         usuario.codigoVerificacion = hashCodigoVerificacion;
         usuario.codigoVerificacionExpires = new Date(Date.now() + 3600000);
         yield usuario.save();
@@ -148,12 +148,12 @@ const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             res.status(400).json({ error: 'El correo electrónico no está registrado.' });
             return;
         }
-        const isMatch = yield bcrypt_1.default.compare(password, usuario.contrasena);
+        const isMatch = yield bcryptjs_1.default.compare(password, usuario.contrasena);
         if (isMatch) {
             res.status(400).json({ error: 'La nueva contraseña debe ser diferente a la anterior.' });
             return;
         }
-        const hashedPassword = yield bcrypt_1.default.hash(password, 10);
+        const hashedPassword = yield bcryptjs_1.default.hash(password, 10);
         usuario.contrasena = hashedPassword;
         yield usuario.save();
         res.status(200).json({ success: true, message: 'Contraseña actualizada con éxito.' });

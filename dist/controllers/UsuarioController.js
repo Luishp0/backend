@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.contarUsuarios = exports.loginUser = exports.visualizarUsuarioPorNombre = exports.eliminarUsuario = exports.actualizarUsuario = exports.visualizarUsuarios = exports.crearUsuario = void 0;
 //import bcrypt from 'bcrypt';
 const UsuarioModel_1 = __importDefault(require("../models/UsuarioModel")); // Importa el modelo de usuario
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const crearUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -32,7 +32,7 @@ const crearUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             return;
         }
         // Generar el hash de la contraseña con bcrypt
-        const hashedPassword = yield bcrypt_1.default.hash(contrasena, 10);
+        const hashedPassword = yield bcryptjs_1.default.hash(contrasena, 10);
         // Crear el nuevo usuario con la contraseña encriptada
         const nuevoUsuario = new UsuarioModel_1.default({
             roles_idroles,
@@ -148,7 +148,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return;
         }
         // Verifica si la contraseña es correcta
-        const isPasswordCorrect = yield bcrypt_1.default.compare(contrasena, usuario.contrasena);
+        const isPasswordCorrect = yield bcryptjs_1.default.compare(contrasena, usuario.contrasena);
         if (!isPasswordCorrect) {
             res.status(400).json({ message: 'Correo electrónico o contraseña incorrectos' });
             return;

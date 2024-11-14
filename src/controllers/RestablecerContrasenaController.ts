@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import nodemailer from 'nodemailer';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import UserModel, { IUser } from '../models/UsuarioModel';
 
 export const enviarCorreoRecuperacion = async (req: Request, res: Response): Promise<void> => {
