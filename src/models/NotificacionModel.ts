@@ -27,6 +27,11 @@ const notificacionSchema = new Schema<INotificacion>({
 });
 
 // Modelo de notificaciones
-const NotificacionModel = mongoose.model<INotificacion>('notificacion', notificacionSchema);
+const NotificacionModel = mongoose.model<INotificacion>(
+  'notificacion', // Nombre del modelo
+  notificacionSchema,
+  'notificacion'  // Nombre exacto de la colección en MongoDB
+);
+
 
 export default NotificacionModel;
