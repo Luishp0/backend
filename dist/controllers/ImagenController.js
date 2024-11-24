@@ -18,8 +18,9 @@ const subirImagen = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         }
         const imagePath = req.file.path; // Ruta relativa de la imagen
         const host = req.hostname === 'localhost' ? '192.168.1.5' : req.hostname; // Usar IP si es localhost
-        const port = process.env.PORT || 8000; // Asegúrate de tener el puerto correcto
-        const imageUrl = `${req.protocol}://${host}:${port}/${imagePath.replace(/\\/g, '/')}`; // URL absoluta
+        const isProduction = process.env.NODE_ENV === 'production';
+        const port = isProduction ? '' : `:${process.env.PORT || 8000}`;
+        const imageUrl = `${req.protocol}://${host}${port}/${imagePath.replace(/\\/g, '/')}`; // URL absoluta sin puerto en producción
         console.log('URL Absoluta de la imagen:', imageUrl); // Para depuración
         // Devolver la URL absoluta en la respuesta
         res.status(200).json({ message: 'Imagen subida exitosamente', filePath: imageUrl });

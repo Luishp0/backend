@@ -5,6 +5,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import multer from 'multer';
 import fs from 'fs';
+import listEndpoints from 'express-list-endpoints';
 import connectDB from './config/database';
 import usuarioRoutes from './routes/UsuarioRoutes';
 import pecesRoutes from './routes/PecesRoutes';
@@ -12,6 +13,7 @@ import sensoresRoutes from './routes/SensoresRoutes';
 import aparatos from './routes/AparatosRoutes';
 import respaldo from './routes/RespaldoRoutes';
 import imagenRoutes from './routes/ImagenRoute';
+import notificacion from './routes/NotificacionRoutes'
 
 // Verifica que la carpeta 'imagenes/' exista
 const imageDir = 'imagenes/';
@@ -37,6 +39,8 @@ app.use('/peces', pecesRoutes);
 app.use('/sensores', sensoresRoutes);
 app.use('/aparatos', aparatos);
 app.use('/respaldo', respaldo);
+app.use('/notificacion', notificacion);
+
 
 // Middleware de manejo de errores de multer y otros errores
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
@@ -52,6 +56,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 connectDB()
   .then(() => {
     app.listen(port, () => {
+      
       console.log(`Servidor corriendo en http://localhost:${port}`);
     });
   })

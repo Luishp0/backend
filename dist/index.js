@@ -16,6 +16,7 @@ const SensoresRoutes_1 = __importDefault(require("./routes/SensoresRoutes"));
 const AparatosRoutes_1 = __importDefault(require("./routes/AparatosRoutes"));
 const RespaldoRoutes_1 = __importDefault(require("./routes/RespaldoRoutes"));
 const ImagenRoute_1 = __importDefault(require("./routes/ImagenRoute"));
+const NotificacionRoutes_1 = __importDefault(require("./routes/NotificacionRoutes"));
 // Verifica que la carpeta 'imagenes/' exista
 const imageDir = 'imagenes/';
 if (!fs_1.default.existsSync(imageDir)) {
@@ -35,6 +36,7 @@ app.use('/peces', PecesRoutes_1.default);
 app.use('/sensores', SensoresRoutes_1.default);
 app.use('/aparatos', AparatosRoutes_1.default);
 app.use('/respaldo', RespaldoRoutes_1.default);
+app.use('/notificacion', NotificacionRoutes_1.default);
 // Middleware de manejo de errores de multer y otros errores
 app.use((err, req, res, next) => {
     if (err instanceof multer_1.default.MulterError) {
