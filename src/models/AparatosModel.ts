@@ -1,19 +1,23 @@
-import mongoose, { Document } from "mongoose";
+import mongoose, { Document } from 'mongoose';
 
-export interface IUser extends Document{
-    nombre: String;
-    minimo: Number; 
-    maximo: Number;
-    estado: Boolean;
+// Interfaz para un aparato
+export interface IAparato extends Document {
+  id_usuario: mongoose.Types.ObjectId; // Relación con el usuario
+  nombre: string;                     // Nombre del aparato
+  minimo: number;                     // Valor mínimo aceptable
+  maximo: number;                     // Valor máximo aceptable
+  estado: boolean;                    // Estado del aparato (activo/inactivo)
 }
 
-const aparatosSchema = new mongoose.Schema({
-    nombre: {type: String, required: true },
-    minimo: {type: Number, requied: true },
-    maximo: {type: Number, required: true},
-    estado: {type: Boolean, required: true}
+// Esquema de aparatos
+const aparatosSchema = new mongoose.Schema<IAparato>({
+  id_usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'usuarios', required: true },
+  nombre: { type: String, required: true },
+  minimo: { type: Number, required: true },
+  maximo: { type: Number, required: true },
+  estado: { type: Boolean, required: true },
 });
 
-const AparatosModel = mongoose.model<IUser>('aparatos', aparatosSchema)
+const AparatosModel = mongoose.model<IAparato>('aparatos', aparatosSchema);
 
 export default AparatosModel;

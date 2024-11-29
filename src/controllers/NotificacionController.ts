@@ -135,3 +135,29 @@ export const marcarTodasLeidas = async (req: Request, res: Response): Promise<vo
     res.status(500).json({ error: error.message });
   }
 };
+
+export const leerNotificacion = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { id_usuario, id_notificacion } = req.params;
+  
+      // Actualizar la notificación específica dentro del array
+      const usuarioNotificacion = await NotificacionModel.findOneAndUpdate(
+        { id_usuario, 'notificacion._id': id_notificacion }, // Busca el documento con la notificación específica
+        { $set: { 'notificacion.$.leido': true } },         // Marca esa notificación como leída
+        { new: true }                                       // Retorna el documento actualizado
+      );
+  
+      if (!usuarioNotificacion) {
+        res.status(404).json({ message: 'No se encontró la notificación especificada' });
+        return;
+      }
+  
+      res.json({
+        message: 'Notificación marcada como leída',
+        usuarioNotificacion,
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+  

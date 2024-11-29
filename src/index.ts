@@ -5,7 +5,6 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import multer from 'multer';
 import fs from 'fs';
-import listEndpoints from 'express-list-endpoints';
 import connectDB from './config/database';
 import usuarioRoutes from './routes/UsuarioRoutes';
 import pecesRoutes from './routes/PecesRoutes';

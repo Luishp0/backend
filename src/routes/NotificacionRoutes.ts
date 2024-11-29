@@ -6,6 +6,7 @@ import {
   actualizarNotificacion,
   eliminarNotificacion,
   marcarTodasLeidas,
+  leerNotificacion
 } from '../controllers/NotificacionController';
 
 const router = Router();
@@ -26,6 +27,9 @@ router.put('/:id', actualizarNotificacion);
 router.delete('/:id', eliminarNotificacion);
 
 // Ruta para marcar todas las notificaciones como leídas
-router.put('/marcar-todas-leidas/:id_usuario', marcarTodasLeidas);
+router.put('/leido/:id_usuario', marcarTodasLeidas);
+
+router.put('/:id_usuario/notificacion/:id_notificacion/leida', leerNotificacion);
+
 
 export default router;
