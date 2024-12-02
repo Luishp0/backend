@@ -11,6 +11,9 @@ export interface IUser extends Document {
   __v: number;
   codigoVerificacion?: string;
   codigoVerificacionExpires?: Date;
+  fotos?: {
+    url: string;
+  };
   subscription?: {
     endpoint: string;
     keys: {
