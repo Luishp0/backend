@@ -23,7 +23,13 @@ if (!fs.existsSync(imageDir)) {
 const app = express();
 const port = 8000;
 
-app.use(cors());
+const corsOptions = {
+  origin: 'https://acuacodeweb.netlify.app', // Permitir este dominio
+  methods: 'GET,POST,PUT,DELETE', // Métodos permitidos
+  credentials: true, // Si necesitas enviar cookies
+};
+
+app.use(cors(corsOptions));
 
 // Middlewares de análisis de cuerpo
 app.use(express.json());
