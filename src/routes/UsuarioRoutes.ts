@@ -1,6 +1,7 @@
 import express from 'express';
-import { actualizarUsuario, contarUsuarios, crearUsuario, eliminarUsuario, loginUser, saveSubscription, visualizarUsuarioPorNombre, visualizarUsuarios } from '../controllers/UsuarioController';
+import { actualizarUsuario, contarUsuarios, crearUsuario, eliminarUsuario, loginUser,   visualizarUsuarioPorNombre, visualizarUsuarios } from '../controllers/UsuarioController';
 import { enviarCorreoRecuperacion, reenviarCodigoVerificacion, resetPassword, verificarCodigo } from '../controllers/RestablecerContrasenaController';
+import {  saveOrUpdateSubscription, sendNotificationToAll, sendNotificationToUsers } from '../controllers/EnviarNotificacion';
 
 const router = express.Router();
 
@@ -13,7 +14,10 @@ router.delete('/:id', eliminarUsuario);
 router.post('/enviarcorreo', enviarCorreoRecuperacion);
 
 router.post('/login', loginUser)
-router.post('/suscripciones/subscribe', saveSubscription);
+router.post('/suscripciones/subscribe', saveOrUpdateSubscription);
+router.post('/notificacion/enviar', sendNotificationToUsers); 
+router.post('/notitifacion/activos', sendNotificationToAll)
+
 
 
 router.post('/verificarcodigo', verificarCodigo);

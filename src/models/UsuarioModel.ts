@@ -33,12 +33,13 @@ const usuarioSchema = new mongoose.Schema({
   codigoVerificacion: String,
   codigoVerificacionExpires: Date,
   subscription: {
-    endpoint: { type: String },
+    endpoint: { type: String, unique: true },
+    expirationTime: { type: Date, required: false },
     keys: {
-      p256dh: { type: String },
-      auth: { type: String },
-    },
-  },
+      p256dh: { type: String, required: false },
+      auth: { type: String, required: false }
+    }
+  }
 });
 
 const UserModel = mongoose.model<IUser>('usuarios', usuarioSchema);

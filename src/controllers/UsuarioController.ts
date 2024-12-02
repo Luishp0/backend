@@ -197,25 +197,3 @@ export const contarUsuarios = async (req: Request, res: Response): Promise<void>
   }
 };
 
-export const saveSubscription = async (req: Request, res: Response) => {
-  const { userId, subscription } = req.body;
-
-  if (!userId || !subscription) {
-    return res.status(400).json({ message: 'Faltan datos requeridos.' });
-  }
-
-  try {
-    const user = await UsuarioModel.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'Usuario no encontrado.' });
-    }
-
-    user.subscription = subscription;
-    await user.save();
-
-    res.status(200).json({ message: 'Suscripción guardada exitosamente.' });
-  } catch (error) {
-    console.error('Error al guardar la suscripción:', error);
-    res.status(500).json({ message: 'Error interno del servidor.' });
-  }
-};
