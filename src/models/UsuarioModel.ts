@@ -24,7 +24,7 @@ export interface IUser extends Document {
 }
 
 const usuarioSchema = new mongoose.Schema({
-  roles_idroles: { type: Number, required: true, default: 2 },
+  roles_idroles: { type: Number, required: true},
   nombre: { type: String, required: true },
   correo: { type: String, required: true, unique: true },
   fechaNacimiento: { type: Date, required: true },
