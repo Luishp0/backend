@@ -1,5 +1,5 @@
 import express from 'express';
-import { actualizarUsuario, contarUsuarios, crearUsuario, eliminarUsuario, loginUser, visualizarUsuarioPorNombre, visualizarUsuarios } from '../controllers/UsuarioController';
+import { actualizarUsuario, contarUsuarios, crearUsuario, eliminarUsuario, loginUser, saveSubscription, visualizarUsuarioPorNombre, visualizarUsuarios } from '../controllers/UsuarioController';
 import { enviarCorreoRecuperacion, reenviarCodigoVerificacion, resetPassword, verificarCodigo } from '../controllers/RestablecerContrasenaController';
 
 const router = express.Router();
@@ -11,6 +11,7 @@ router.get('/:nombre', visualizarUsuarioPorNombre);
 router.put('/:id', actualizarUsuario);
 router.delete('/:id', eliminarUsuario);
 router.post('/login', loginUser)
+router.post('/suscripciones/subscribe', saveSubscription);
 
 router.post('/enviarcorreo', enviarCorreoRecuperacion);
 router.post('/verificarcodigo', verificarCodigo);

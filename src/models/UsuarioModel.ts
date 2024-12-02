@@ -11,6 +11,13 @@ export interface IUser extends Document {
   __v: number;
   codigoVerificacion?: string;
   codigoVerificacionExpires?: Date;
+  subscription?: {
+    endpoint: string;
+    keys: {
+      p256dh: string;
+      auth: string;
+    };
+  };
 }
 
 const usuarioSchema = new mongoose.Schema({
@@ -22,6 +29,13 @@ const usuarioSchema = new mongoose.Schema({
   telefono: { type: String, required: true },
   codigoVerificacion: String,
   codigoVerificacionExpires: Date,
+  subscription: {
+    endpoint: { type: String },
+    keys: {
+      p256dh: { type: String },
+      auth: { type: String },
+    },
+  },
 });
 
 const UserModel = mongoose.model<IUser>('usuarios', usuarioSchema);
